@@ -1,5 +1,5 @@
 # Example of nested function
-from time import sleep
+from time import sleep, time
 from functools import wraps
 
 
@@ -55,13 +55,16 @@ def func1(value):
 # func1 = decorator(func1, )
 
 if __name__ == "__main__":
-    hello = conversation()
-    print(type(hello))
-    hello()
-
-    decorated_function = decorator(func1)
-    print(type(decorated_function))
-    decorated_function('FirstArgument')
+    # hello = conversation()
+    # print(type(hello))
+    # hello()
+    #
+    # decorated_function = decorator(func1)
+    # print(type(decorated_function))
+    # decorated_function('FirstArgument')
 
     # Some user does:
+    start = time()
     func1('FirstArgument')
+    end = time()
+    print(end - start)
