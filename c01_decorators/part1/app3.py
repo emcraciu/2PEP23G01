@@ -9,3 +9,12 @@ def count(func):
         return func(*args, **kwargs)
     wrapper.calls = 0
     return wrapper
+
+@count
+def my_func():
+    print('x')
+
+my_func()
+my_func()
+my_func()
+my_func()
