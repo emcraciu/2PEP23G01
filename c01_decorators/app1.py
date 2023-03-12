@@ -12,6 +12,7 @@ from functools import wraps
 def working_hours(start, stop):
     start = datetime.time(hour=start)
     stop = datetime.time(hour=stop)
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
