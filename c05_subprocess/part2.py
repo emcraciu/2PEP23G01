@@ -1,3 +1,7 @@
+import re
+import subprocess
+
+
 class Utils:
 
     def get_ip_adress(self):
