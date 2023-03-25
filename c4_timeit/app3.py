@@ -35,24 +35,24 @@ if __name__ == '__main__':
         print(ip1)
 
 #
-# class My_File_Opener:
-#
-#     def __init__(self, file_name):
-#         self.file = open(file_name, 'r')
-#
-#     def __enter__(self):
-#         print('''in enter''')
-#         return self
-#
-#     def __next__(self):
-#         pass
-#
-#     def __iter__(self):
-#         return self
-#
-#     def __exit__(self, exc_type, exc_val, exc_tb):
-#         print('''in exit''')
-#
+class My_File_Opener:
+
+    def __init__(self, file_name):
+        self.file = open(file_name, 'r')
+
+    def __enter__(self):
+        print('''in enter''')
+        return self
+
+    def __next__(self):
+        pass
+
+    def __iter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('''in exit''')
+
 #
 #
 # # mfo = My_File_Opener('part1.py')
