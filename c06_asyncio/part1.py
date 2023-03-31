@@ -39,11 +39,18 @@ async def get_word_time():
             print('Response time', end - start)
         for response in responses:
             text = await response.text()
-            print('Response text', text)
+            print(type(text))
+            print('Response text', json.loads(text))
+            response_loc = json.loads(text)
+
+        return list(map(lambda a: a.split('/')[1], response_loc))
+            # print('Response text', json.loads(text)['datetime'])
+            # print(type(json.loads(text)))
 
 
 async def main():
     task = await asyncio.gather(*(get_word_time() for _ in range(10)))
+    print(task)
 
 
 if __name__ == "__main__":
