@@ -3,8 +3,10 @@
 """
 import os
 import re
+import sys
 import time
 import subprocess
+from subprocess import CalledProcessError
 
 
 class Utils:
@@ -24,14 +26,24 @@ class Utils:
         return dict
 
     def connect_ssh(self, ip: str):
-        ssh = subprocess.Popen(['ssh', '-T',  ip], shell=True)
-        stdout, stderr = ssh.communicate(input=b'password\n')
-        ssh.terminate()
+        with subprocess.Popen(['ssh', '-T', f'exevil1@{ip}'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as ssh:
+            time.sleep(3)
+            stdout, stderr = ssh.communicate(input=b'Yes')
+            print(stdout)
+            print(stderr)
+            ssh.terminate()
 
     def allow_user_to_enter_message(self):
-        notepad = subprocess.Popen(['notepad.exe', 'file.txt'])
+        notepad = subprocess.Popen(['notepad.exe', 'file.txt'], stdin=subprocess.PIPE)
         stdout, stderr = notepad.communicate(input=b'Yes')
         notepad.terminate()
+
+    def fail_a_program(self, exit_code):
+        failed_program = subprocess.run([sys.executable, '-c',  f'exit({exit_code})'])
+        try:
+            failed_program.check_returncode()
+        except CalledProcessError:
+            print(f'Application has failed with return code: {failed_program.returncode}')
 
     def ping(self, ip_address):
         ping_var = subprocess.Popen(['ping', ip_address], stderr=subprocess.PIPE)
@@ -61,5 +73,7 @@ class Utils:
             print(output)
 
 utils = Utils()
-print(utils.get_ip_adress())
-utils.allow_user_to_enter_message()
+# print(utils.get_ip_adress())
+utils.fail_a_program(10)
+# utils.connect_ssh('192.168.1.31')
+#utils.allow_user_to_enter_message()
