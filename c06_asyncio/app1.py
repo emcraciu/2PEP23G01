@@ -32,28 +32,28 @@ async def get_word_time():
         print(task[0])
 
 
-#+asyncio.run(get_word_time())
++asyncio.run(get_word_time())
 
-# async def get_time():
-#     await asyncio.sleep(2)
-#     print(f'finished time: {datetime.now()}')
-
-
-# print(type(get_time()))
+async def get_time():
+    await asyncio.sleep(2)
+    print(f'finished time: {datetime.now()}')
 
 
-# async def main():
-#     start_time = time.time()
-#     await
-#     end_time = time.time()
-#     print(f'Execution time: {end_time - start_time}')
-#
-#
-# if __name__ == "__main__":
-#     asyncio.run(main())
-#     # #asyncio.run(main())
-#     # result = asyncio.gather(main(), main())
-#     # print(type(result))
-#     # await result
+print(type(get_time()))
+
+
+async def main():
+    start_time = time.time()
+    await
+    end_time = time.time()
+    print(f'Execution time: {end_time - start_time}')
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+    # #asyncio.run(main())
+    # result = asyncio.gather(main(), main())
+    # print(type(result))
+    # await result
 
 
