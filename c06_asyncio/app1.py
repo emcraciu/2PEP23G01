@@ -9,17 +9,11 @@ time_zones = []
 
 
 async def time_getter(session, location='Bucharest', nr=0):
-    global time_zones
-    while True:
-        if nr == len(time_zones):
-            response = await session.request(method='GET',
-                                             url=f'http://worldtimeapi.org/api/timezone/Europe/{location}')
-            my_time = await response.text()
-            time_zones.append(json.loads(my_time))
-            break
-        else:
-            time.sleep(0.1)
-    return json.loads(my_time)
+    response = await session.request(method='GET',
+                                     url=f'http://worldtimeapi.org/api/timezone/Europe/{location}')
+    my_time = await response.text()
+    time_zones.append(json.loads(my_time))
+    return json.loads(my_time)['datetime']
 
 
 async def get_local_time(session, location='Europe'):
@@ -32,7 +26,9 @@ async def get_local_time(session, location='Europe'):
 async def get_word_time():
     async with aiohttp.ClientSession() as session:
         start_time = time.time()
-        task = await asyncio.gather(*(time_getter(session, nr=i) for i in range(3)))
+        task = await asyncio.gather(get_local_time(session, 'Europe'))
+        task = await asyncio.gather(*(time_getter(session, location=location, nr=3) for location in task[0]))
+        print(task)
         end_time = time.time()
         print(f'total time: {end_time - start_time}')
         print(task[0])
@@ -54,7 +50,7 @@ async def get_word_time():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(get_word_time())
     # #asyncio.run(main())
     # result = asyncio.gather(main(), main())
     # print(type(result))
