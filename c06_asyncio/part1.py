@@ -16,10 +16,10 @@ import asyncio
 
 import asyncio
 
-async def main():
-    print('Hello ...')
-    await asyncio.sleep(5)
-    print('... World!')
+# async def main():
+#     print('Hello ...')
+#     await asyncio.sleep(5)
+#     print('... World!')
 
 # asyncio.run(main())
 # asyncio.run(main())
@@ -28,23 +28,24 @@ async def main():
 
 async def get_word_time():
     async with aiohttp.ClientSession() as session:
-        start = time.time()
-        response = await session.request(method='GET', url=f'http://worldtimeapi.org/api/timezone/Europe/')
+        responses = []
+        for i in range(1):
+            start = time.time()
+            response = await session.request(method='GET', url=f'http://worldtimeapi.org/api/timezone/Europe/')
+            responses.append(response)
+            end = time.time()
+            print(end - start)
+        for response in responses:
+            text = await response.text()
+            print(text)
 
-        end = time.time()
-        print(end - start)
-        print(response)
 
-asyncio.run(get_word_time())
 
-# async def time_getter(session, location='Bucharest', nr=0):
-#     while True:
-#         if nr == len(time_zones):
-#             response = await session.request(method='GET',
-#                                              url=f'http://worldtimeapi.org/api/timezone/Europe/{location}')
-#             my_time = await response.text()
-#             time_zones.append(json.loads(my_time))
-#             break
-#         else:
-#             time.sleep(0.1)
-#     return json.loads(my_time)
+async def main():
+    task = await asyncio.gather(*(get_word_time() for _ in range(200)))
+
+
+if __name__ == "__main__":
+    # asyncio.run(get_word_time())
+    asyncio.run(main())
+
