@@ -4,6 +4,7 @@ from time import sleep
 
 import requests
 
+
 def time_zone(region):
     sleep(5)
     response = requests.get(f'http://worldtimeapi.org/api/timezone/{region}')
