@@ -1,33 +1,41 @@
+import time
 from multiprocessing import Queue, Process
+from time import sleep
 
 
-def gen_num():
-    for i in range(100):
-        pass
-        # numbers 1000 and 1500
+def gen_num(q: Queue):
+    for i in range(2000, 10000):
+        q.put(i)
 
 
-def factorial1(n):
+def factorial1(q: Queue):
+    time.sleep(0.2)
+    while not q.empty():
+        n = q.get()
+        result = 1
+        for i in range(1, n + 1):
+            result *= i
+        #print(result)
 
-    result = 1
-    for i in range(1, n + 1):
-        result *= i
-    return result
 
 
 if __name__ == '__main__':
     q = Queue()
 
     processes = []
-    for _ in range(3):
-        x = Process(target=factorial1, args=(q,))
-        x.start()
-        processes.append(x)
 
     p = Process(target=gen_num, args=(q,))
     p.start()
 
+    for _ in range(12):
+        x = Process(target=factorial1, args=(q,))
+        x.start()
+        processes.append(x)
+
+
+    p.join()
     for y in processes:
         y.join()
 
-    p.join()
+    print(q.qsize())
+
