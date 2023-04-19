@@ -38,6 +38,6 @@ client = Client()
 server = Server()
 print(client.start())
 print(server.start())
-server.join()
-client.join()
+print(server.join())
+print(client.join())
 
