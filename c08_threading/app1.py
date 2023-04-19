@@ -21,6 +21,7 @@ class Client(Thread):
     def run(self) -> None:
         try:
             output = primes(200)
+            print(output)
         finally:
             del self._target, self._args, self._kwargs
         return output
@@ -29,7 +30,8 @@ class Client(Thread):
 class Server(Thread):
     def run(self) -> None:
         try:
-            primes(200)
+            output = primes(200)
+            print(output)
         finally:
             del self._target, self._args, self._kwargs
 
@@ -40,4 +42,5 @@ print(client.start())
 print(server.start())
 print(server.join())
 print(client.join())
+print('done')
 
