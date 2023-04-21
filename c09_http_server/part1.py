@@ -28,22 +28,22 @@ class WebPhoneBook(BaseHTTPRequestHandler):
 """ + """\n{}""")
         print(self.html)
         self.wfile.write(self.html.encode())
-#
-#     def do_POST(self):
-#         # print('done')
-#         # print(self.headers['test'])
-#         # print(self.headers['content-type'])
-#         print(self.rfile.read(1))
-#         # print(self.headers['Name'])
-#         # print(self.headers['Number'])
-#         self.html = self.html.format(f"""
-#     <tr>
-#         <td align="left">{self.headers['Name']}</td>
-#         <td align="left">{self.headers['Number']}</td>
-#     </tr>
-# """ + """\n{}""")
-#         print(self.html)
-#         self.send_response(200)
+
+    def do_POST(self):
+        # print('done')
+        # print(self.headers['test'])
+        # print(self.headers['content-type'])
+        print(self.rfile.read(4))
+        print(self.headers['Name'])
+        print(self.headers['Number'])
+        self.html = self.html.format(f"""
+    <tr>
+        <td align="left">{self.headers['Name']}</td>
+        <td align="left">{self.headers['Number']}</td>
+    </tr>
+""" + """\n{}""")
+        print(self.html)
+        self.send_response(200)
 
 
 http_server = HTTPServer(('localhost', 8082), WebPhoneBook)
