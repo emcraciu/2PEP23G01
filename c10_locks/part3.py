@@ -15,8 +15,8 @@ def runner(e: Event, id):
     counter = 0
     while counter < 3:
         counter += 1
-        time.sleep(1 / id)
-        if not e.isSet():
+        time.sleep(10 / id)
+        if not e.is_set():
             break
         print(f'{id}', end='')
     else:
@@ -26,7 +26,7 @@ def runner(e: Event, id):
 def referee(e: Event):
     print('Start: ', end='')
     for i in range(3):
-        time.sleep(0.3)
+        time.sleep(1)
         print(f'{i}', end='')
     print()
     e.set()
