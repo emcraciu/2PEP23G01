@@ -1,3 +1,4 @@
+import json
 import socketserver
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
@@ -33,7 +34,10 @@ class WebPhoneBook(BaseHTTPRequestHandler):
         # print('done')
         # print(self.headers['test'])
         # print(self.headers['content-type'])
-        print(self.rfile.read(4))
+        raw_data = self.rfile.read(int(self.headers['Content-Length']))
+        data = json.loads(raw_data)
+        print(data)
+        self.send_response(200)
         print(self.headers['Name'])
         print(self.headers['Number'])
         self.html = self.html.format(f"""
@@ -42,8 +46,15 @@ class WebPhoneBook(BaseHTTPRequestHandler):
         <td align="left">{self.headers['Number']}</td>
     </tr>
 """ + """\n{}""")
-        print(self.html)
-        self.send_response(200)
+        for user, number in data.items():
+            self.html = self.html.format(f"""
+    <tr>
+        <td align="left">{user}</td>
+        <td align="left">{number}</td>
+    </tr>
+            """ + """\n{}""")
+        with open('index.html', 'w') as file:
+            file.write(self.html)
 
 
 http_server = HTTPServer(('localhost', 8082), WebPhoneBook)
