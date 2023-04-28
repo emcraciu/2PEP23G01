@@ -67,7 +67,8 @@ class Connect:
         print(self.__class__.__name__, "Shared secret: ", self.__shared_secret)
 
     def send_encrypted_message(self, message):
-        # my code 
+        # my code
+        pass
 
 class Client(Connect):
     def start(self) -> None:
