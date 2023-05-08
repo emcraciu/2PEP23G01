@@ -13,5 +13,4 @@ label3.pack(side=tkinter.LEFT, fill=tkinter.Y)
 label4 = tkinter.Label(main_window, text='Yellow Text', bg='yellow')
 label4.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 
-
 main_window.mainloop()

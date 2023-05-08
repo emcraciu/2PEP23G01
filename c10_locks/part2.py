@@ -31,7 +31,7 @@ for i in range(5):
 for thd in processes:
     thd.join()
 
-# exampel
+# example for reacquired lock
 print(80 * "#")
 example_lock = RLock()
 
