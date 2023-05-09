@@ -11,7 +11,7 @@ def time_zone(e: Event, id):
     e.wait()
     time.sleep(random.choice([1,2,3]))#timp pentru executie
     print('Running: ', end='')
-    if not e.is_set(): #incheie executia
+    if not e.is_set():   #incheie executia
         print("giving up")
         return
     response = requests.get(f'http://worldtimeapi.org/api/timezone/Europe')
