@@ -15,10 +15,10 @@ class MainMenu():
 
         main_l2 = tkinter.Menu(self.main_window)
         main_l1.add_cascade(label='File', menu=main_l2)
-
+        #
         main_l3 = tkinter.Menu(self.main_window)
         main_l2.add_cascade(label='New', menu=main_l3)
-
+        #
         main_l3.add_command(label='New Project', command=self.new_window)
         main_l3.add_command(label='New Project in same Window', command=quit)
 
