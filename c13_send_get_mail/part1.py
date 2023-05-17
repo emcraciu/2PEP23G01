@@ -55,7 +55,7 @@ class MainMenu():
         search = tkinter.Label(self.main_window, text='Search: ')
         search.grid(row=4, column=0, sticky=tkinter.E)
         self.search = tkinter.Entry(self.main_window)
-        self.search.select_clear
+        self.search.select_clear()
         self.search.bind('<KeyRelease>', self.search_text)
         self.search.grid(row=4, column=1, sticky=tkinter.W)
 
