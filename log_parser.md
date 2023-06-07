@@ -1,0 +1,1 @@
+# Create an app that receives log path and searches for error in all log files
