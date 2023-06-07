@@ -1,0 +1,77 @@
+"""Create Python UI application that will:
+
+    retrieve timezones from this link: (50p)
+        http://worldtimeapi.org/api/timezone*
+        Allow the user to select a timezone and open a new window indicating the time in the selected timezone using this link: (50p)
+        http://worldtimeapi.org/api/timezone// Detailed description:
+        all windows must have title (5p)
+        all modules classes and methods must be documented (10p)
+        type hints should be used whenever possible (5p)
+        at least two unittests created for at lest one function (20p)
+        all timezones are displayed. (30p)
+        each timezone clicked will open a new window and show time in that timezone (20p)
+        retrieving time to display is done async or in separate thread or process (10p)
+
+Note: You can choose to pack new Frame or open new window for each displayed time. For new window you can use tkinter.TopLevel(main_window)"""
+
+import tkinter
+from multiprocessing import Process, Queue
+import json
+import time
+import pylint
+import requests
+
+class GetTimezones():
+    title = 'TimeZone'
+
+    def __init__(self, main_window: tkinter.Tk):
+        self.main_window = main_window
+        self.main_window.title(self.title)
+        timezones = self.time_zone()
+
+        region1 = timezones.pop()
+        first_timezone = tkinter.Button(self.main_window, command=lambda:self.get_time(region1), text=region1)
+        first_timezone.grid(row=0, column=0)
+
+
+        region2 = timezones.pop()
+        second_timezone = tkinter.Button(self.main_window, command=lambda:self.get_time(region2), text=region2)
+        second_timezone.grid(row=0, column=1)
+
+
+    def open_new_window(self, time, get_timezones):
+        window = tkinter.Tk()
+        new_title = time
+        window.title(new_title)
+
+        display = tkinter.Text(window, height=30, width=90)
+        display.grid(row=3, column=3)
+        display.insert('0.0',get_timezones)
+
+
+    def run(self):
+        self.main_window.mainloop()
+
+
+    def time_zone(self):
+        """function that get the zones indicated"""
+        response = requests.get('http://worldtimeapi.org/api/timezone/Europe', timeout=1)
+        text = response.text
+        time_zones1 = json.loads(text)
+        return time_zones1
+
+
+    def get_time(self,time):
+        """function description"""
+        #reg = regionx.get()
+        response = requests.get(f'http://worldtimeapi.org/api/timezone//{time}', timeout=1)
+        text = response.text
+        time_zones2 = json.loads(text)
+        get_timezones = time_zones2['datetime']
+        self.open_new_window(time,get_timezones)
+
+
+window = tkinter.Tk()
+main_menu = GetTimezones(window)
+main_menu.run()
+
