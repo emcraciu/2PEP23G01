@@ -15,6 +15,7 @@ def get_numbers(length: int, queue: Queue) -> None:
     for number in text.strip().split("\n"):
         nr_list.append(int(number))
     queue.put(random.choice(nr_list))
+    print()
 
 
 def get_pass_threads(nr_char: int) -> str:
